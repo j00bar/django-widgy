@@ -58,14 +58,6 @@ class VersionCommitAdminBase(AuthorizedAdminMixin, ModelAdmin):
         return qs.unapproved().select_related('author', 'root_node')
     queryset = get_queryset
 
-    def get_object(self, request, object_id):
-        model = self.model
-        try:
-            object_id = model._meta.pk.to_python(object_id)
-            return model.objects.get(pk=object_id)
-        except (model.DoesNotExist, ValidationError, ValueError):
-            return None
-
     def get_changelist(self, request, *args, **kwargs):
         return VersionCommitChangeList
 
